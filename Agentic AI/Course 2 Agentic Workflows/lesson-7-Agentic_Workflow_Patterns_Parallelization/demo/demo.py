@@ -5,10 +5,18 @@ from dotenv import load_dotenv
 import threading
 
 # Load environment variables and initialize OpenAI client
-load_dotenv()
+# load_dotenv()
+# client = OpenAI(
+#     base_url = "https://openai.vocareum.com/v1",
+#     api_key=os.getenv("OPENAI_API_KEY"))
+path_to_key_file = os.path.join(os.path.abspath("."), "api_keys", "openai.key")
+key = open(path_to_key_file, "rt").read()
+vocareum_base_url = "https://openai.vocareum.com/v1"
 client = OpenAI(
-    base_url = "https://openai.vocareum.com/v1",
-    api_key=os.getenv("OPENAI_API_KEY"))
+            base_url = vocareum_base_url,
+            api_key=key
+        )
+
 
 # Shared dict for thread-safe collection
 agent_outputs = {}

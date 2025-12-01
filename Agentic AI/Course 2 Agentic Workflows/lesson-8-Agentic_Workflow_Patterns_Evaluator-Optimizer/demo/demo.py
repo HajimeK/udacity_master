@@ -2,10 +2,19 @@ import os
 from dotenv import load_dotenv
 from openai import OpenAI
 
-load_dotenv()
+# load_dotenv()
+# client = OpenAI(
+#     base_url = "https://openai.vocareum.com/v1",
+#     api_key=os.getenv("OPENAI_API_KEY"))
+
+path_to_key_file = os.path.join(os.path.abspath("."), "api_keys", "openai.key")
+key = open(path_to_key_file, "rt").read()
+vocareum_base_url = "https://openai.vocareum.com/v1"
+#load_dotenv()
 client = OpenAI(
-    base_url = "https://openai.vocareum.com/v1",
-    api_key=os.getenv("OPENAI_API_KEY"))
+    base_url = vocareum_base_url,
+    api_key=key
+)
 
 MAX_RETRIES = 5
 user_prompt = (
