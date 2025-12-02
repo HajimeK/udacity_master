@@ -350,24 +350,46 @@ class RoutingAgent():
         print(f"[Router] Best agent: {best_agent['name']} (score={best_score:.3f})")
         return best_agent["func"](user_input)
 
-'''
+
 class ActionPlanningAgent:
 
     def __init__(self, openai_api_key, knowledge):
-        # TODO: 1 - Initialize the agent attributes here
-        pass
+        # Initialize the agent attributes here
+        self.openai_api_key = openai_api_key
+        self.openai_base_url = "https://openai.vocareum.com/v1"
+        # Instantiate the OpenAI client using the provided API key
+        self.client = OpenAI(
+            base_url = self.openai_base_url,
+            api_key = self.openai_api_key
+        )
+        self.default_model = "gpt-3.5-turbo"
+        self.knowledge = knowledge
+        self.persona = f"""
+        You are an action planning agent.
+        Using your knowledge, you extract from the user prompt the steps requested
+        to complete the action the user is asking for.
+        You return the steps as a list.
+        Only return the steps in your knowledge.
+        Forget any previous context.
+        This is your knowledge: {self.knowledge}
+        """
+
 
     def extract_steps_from_prompt(self, prompt):
-
-        # TODO: 2 - Instantiate the OpenAI client using the provided API key
-        # TODO: 3 - Call the OpenAI API to get a response from the "gpt-3.5-turbo" model.
+        # Call the OpenAI API to get a response from the "gpt-3.5-turbo" model.
         # Provide the following system prompt along with the user's prompt:
         # "You are an action planning agent. Using your knowledge, you extract from the user prompt the steps requested to complete the action the user is asking for. You return the steps as a list. Only return the steps in your knowledge. Forget any previous context. This is your knowledge: {pass the knowledge here}"
-
-        response_text = ""  # TODO: 4 - Extract the response text from the OpenAI API response
+        response = self.client.chat.completions.create(
+                    model=self.default_model,
+                    messages=[
+                        {"role": "system", "content": self.persona},
+                        {"role": "user", "content": prompt}
+                    ],
+                    temperature=0
+                )
+        response_text = response.choices[0].message.content
 
         # TODO: 5 - Clean and format the extracted steps by removing empty lines and unwanted text
         steps = response_text.split("\n")
 
         return steps
-'''
