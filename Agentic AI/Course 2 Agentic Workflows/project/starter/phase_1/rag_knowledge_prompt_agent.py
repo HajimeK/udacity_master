@@ -1,5 +1,6 @@
 from workflow_agents.base_agents import RAGKnowledgePromptAgent
 from dotenv import load_dotenv
+import os
 
 # Load the openai_api_key variable with your OpenAI API key
 load_dotenv()

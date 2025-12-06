@@ -28,8 +28,7 @@ class BaseAgent:
         self.messages.append({"role": "system", "content": self.system_prompt})
 
     def setUserQuery(self, prompt: str):
-        self.user_prompt = prompt
-        self.messages.append({"role": "user", "content": self.user_prompt})
+        self.messages.append({"role": "user", "content": self.system_prompt})
 
     def clearMessage(self):
         self.messages = []
@@ -390,7 +389,7 @@ class ActionPlanningAgent:
                 )
         response_text = response.choices[0].message.content
 
-        # Clean and format the extracted steps by removing empty lines and unwanted text
+        # TODO: 5 - Clean and format the extracted steps by removing empty lines and unwanted text
         steps = response_text.split("\n")
 
         return steps

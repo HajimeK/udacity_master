@@ -1,4 +1,4 @@
-from workflow_agents.base_agents import KnowledgeAugmentedPromptAgent, ActionPlanningAgent
+from workflow_agents.base_agents import ActionPlanningAgent
 import os
 from dotenv import load_dotenv
 
