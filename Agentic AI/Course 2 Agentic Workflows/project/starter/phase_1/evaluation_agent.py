@@ -1,12 +1,10 @@
 from workflow_agents.base_agents import EvaluationAgent, KnowledgeAugmentedPromptAgent
 import os
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
 
-# Load environment variables
-#load_dotenv()
-#openai_api_key = os.getenv("OPENAI_API_KEY")
-path_to_key_file = os.path.join(os.path.abspath("api_keys"), "openai.key")
-openai_api_key = open(path_to_key_file, "rt").read()
+# Load the openai_api_key variable with your OpenAI API key
+load_dotenv()
+openai_api_key = os.getenv("OPENAI_API_KEY")
 
 prompt = "What is the capital of France?"
 
@@ -34,4 +32,5 @@ initial_prompt = "What is the capital of France?"
 print("---- Evaluation Start ----")
 result = evaluation_agent.evaluate(initial_prompt = initial_prompt)
 print("---- Evaluation Done ----")
-print(result)
+for key, value in result.items():
+    print(f"{key} : {value} \n")

@@ -1,11 +1,8 @@
 from workflow_agents.base_agents import RAGKnowledgePromptAgent
-import os
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
+# Load the openai_api_key variable with your OpenAI API key
 load_dotenv()
-
-# Define the parameters for the agent
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
 persona = "You are a college professor, yous answer always starts with: Dear students,"

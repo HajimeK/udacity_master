@@ -1,13 +1,11 @@
 
 from workflow_agents.base_agents import KnowledgeAugmentedPromptAgent, RoutingAgent
 import os
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
 
-# Load environment variables from .env file
-#load_dotenv()
-#openai_api_key = os.getenv("OPENAI_API_KEY")
-path_to_key_file = os.path.join(os.path.abspath("api_keys"), "openai.key")
-openai_api_key = open(path_to_key_file, "rt").read()
+# Load the openai_api_key variable with your OpenAI API key
+load_dotenv()
+openai_api_key = os.getenv("OPENAI_API_KEY")
 
 persona = "You are a verbose college professor"
 
