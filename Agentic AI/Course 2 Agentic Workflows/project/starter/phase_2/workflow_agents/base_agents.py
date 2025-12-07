@@ -354,7 +354,6 @@ class RoutingAgent():
 class ActionPlanningAgent:
 
     def __init__(self, openai_api_key, knowledge):
-        # Initialize the agent attributes here
         self.openai_api_key = openai_api_key
         self.openai_base_url = "https://openai.vocareum.com/v1"
         # Instantiate the OpenAI client using the provided API key
@@ -367,11 +366,16 @@ class ActionPlanningAgent:
         self.persona = f"""
         You are an action planning agent.
         Using your knowledge, you extract from the user prompt the steps requested
-        to complete the action the user is asking for.
+        to complete the action the user is asking for in the prompt.
         You return the steps as a list.
-        Only return the steps in your knowledge.
+        Only return the steps in your knowledge which is defined as
+        {self.knowledge}
         Forget any previous context.
-        This is your knowledge: {self.knowledge}
+
+        Output only the steps in the numbered list as the following format:
+        1. Step 1
+        2. Step 2
+        3. Step 3
         """
 
 
@@ -389,7 +393,7 @@ class ActionPlanningAgent:
                 )
         response_text = response.choices[0].message.content
 
-        # TODO: 5 - Clean and format the extracted steps by removing empty lines and unwanted text
+        # lean and format the extracted steps by removing empty lines and unwanted text
         steps = response_text.split("\n")
 
         return steps

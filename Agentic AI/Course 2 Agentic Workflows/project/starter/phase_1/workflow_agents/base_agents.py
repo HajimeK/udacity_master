@@ -26,21 +26,16 @@ class BaseAgent:
     def setAgentPersona(self, prompt: str):
         self.system_prompt = prompt
         self.messages.append({"role": "system", "content": self.system_prompt})
-        #print(f"Persona set: {self.messages}")
 
     def setUserQuery(self, prompt: str):
-        self.user_prompt = prompt
-        self.messages.append({"role": "user", "content": self.user_prompt})
-        #print(f"User Query set: {self.messages}")
+        self.messages.append({"role": "user", "content": self.system_prompt})
 
     def clearMessage(self):
         self.messages = []
         if 0 !=len(self.system_prompt):
             self.setAgentPersona(self.system_prompt)
-        #print(f"message initialized: {self.messages}")
 
     def respond(self):
-        #print(self.messages)
         response = self.client.chat.completions.create(
             model = self.model,
             messages = self.messages,
@@ -61,7 +56,7 @@ class DirectPromptAgent(BaseAgent):
 class AugmentedPromptAgent(BaseAgent):
     def __init__(self, openai_api_key, persona: str):
         super().__init__(openai_api_key=openai_api_key)
-        super().setAgentPersona(persona)
+        self.setAgentPersona(persona)
 
     def respond(self, input_text):
         """Generate a response using OpenAI API."""
@@ -160,7 +155,7 @@ class RAGKnowledgePromptAgent:
             return [{"chunk_id": 0, "text": text, "chunk_size": len(text)}]
 
         chunks, start, chunk_id = [], 0, 0
-        #print(len(text))
+
         while start < len(text):
             end = min(start + self.chunk_size, len(text))
             if separator in text[start:end]:
@@ -173,9 +168,6 @@ class RAGKnowledgePromptAgent:
                 "start_char": start,
                 "end_char": end
             })
-
-            if end == len(text):
-                break
 
             start = end - self.chunk_overlap
             chunk_id += 1
@@ -362,7 +354,6 @@ class RoutingAgent():
 class ActionPlanningAgent:
 
     def __init__(self, openai_api_key, knowledge):
-        # Initialize the agent attributes here
         self.openai_api_key = openai_api_key
         self.openai_base_url = "https://openai.vocareum.com/v1"
         # Instantiate the OpenAI client using the provided API key
@@ -375,11 +366,15 @@ class ActionPlanningAgent:
         self.persona = f"""
         You are an action planning agent.
         Using your knowledge, you extract from the user prompt the steps requested
-        to complete the action the user is asking for.
+        to complete the action the user is asking for in the prompt.
         You return the steps as a list.
-        Only return the steps in your knowledge.
+        Only return the steps in your knowledge which is defined as {self.knowledge}
         Forget any previous context.
-        This is your knowledge: {self.knowledge}
+
+        Output only the steps in the numbered list as the following format:
+        1. Step 1
+        2. Step 2
+        3. Step 3
         """
 
 
@@ -397,7 +392,7 @@ class ActionPlanningAgent:
                 )
         response_text = response.choices[0].message.content
 
-        # Clean and format the extracted steps by removing empty lines and unwanted text
+        # TODO: 5 - Clean and format the extracted steps by removing empty lines and unwanted text
         steps = response_text.split("\n")
 
         return steps
