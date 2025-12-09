@@ -7,10 +7,13 @@ import uuid
 from datetime import datetime
 from openai import OpenAI
 
+#OPENAI_BASE_URL = "https://openai.vocareum.com/v1"
+OPENAI_BASE_URL = "https://api.openai.com/v1"
+
 class BaseAgent:
     def __init__(self, openai_api_key, model="gpt-3.5-turbo"):
         self.open_api_key = openai_api_key
-        self.openai_base_url = "https://openai.vocareum.com/v1"
+        self.openai_base_url = OPENAI_BASE_URL
         self.client = OpenAI(
             base_url = self.openai_base_url,
             api_key=self.open_api_key
@@ -116,7 +119,7 @@ class RAGKnowledgePromptAgent:
         Returns:
         list: The embedding vector.
         """
-        client = OpenAI(base_url="https://openai.vocareum.com/v1", api_key=self.openai_api_key)
+        client = OpenAI(base_url=OPENAI_BASE_URL, api_key=self.openai_api_key)
         response = client.embeddings.create(
             model="text-embedding-3-large",
             input=text,
@@ -169,6 +172,9 @@ class RAGKnowledgePromptAgent:
                 "end_char": end
             })
 
+            if end >= len(text):
+                break;
+
             start = end - self.chunk_overlap
             chunk_id += 1
 
@@ -209,7 +215,7 @@ class RAGKnowledgePromptAgent:
 
         best_chunk = df.loc[df['similarity'].idxmax(), 'text']
 
-        client = OpenAI(base_url="https://openai.vocareum.com/v1", api_key=self.openai_api_key)
+        client = OpenAI(base_url=OPENAI_BASE_URL, api_key=self.openai_api_key)
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
@@ -227,7 +233,7 @@ class EvaluationAgent:
     def __init__(self, openai_api_key, persona, evaluation_criteria, worker_agent, max_interactions: int, model="gpt-3.5-turbo"):
         # Initialize the EvaluationAgent with given attributes.
         self.openai_api_key = openai_api_key
-        self.openai_base_url = "https://openai.vocareum.com/v1"
+        self.openai_base_url = OPENAI_BASE_URL
         self.client = OpenAI(
             base_url = self.openai_base_url,
             api_key=self.openai_api_key
@@ -305,7 +311,7 @@ class RoutingAgent():
     def __init__(self, openai_api_key, agents = []):
         # Initialize the agent with given attributes
         self.openai_api_key = openai_api_key
-        self.openai_base_url = "https://openai.vocareum.com/v1"
+        self.openai_base_url = OPENAI_BASE_URL
         self.embedding_model = "text-embedding-3-large"
         self.client = OpenAI(
             base_url = self.openai_base_url,
@@ -355,7 +361,7 @@ class ActionPlanningAgent:
 
     def __init__(self, openai_api_key, knowledge):
         self.openai_api_key = openai_api_key
-        self.openai_base_url = "https://openai.vocareum.com/v1"
+        self.openai_base_url = OPENAI_BASE_URL
         # Instantiate the OpenAI client using the provided API key
         self.client = OpenAI(
             base_url = self.openai_base_url,
@@ -376,6 +382,8 @@ class ActionPlanningAgent:
         1. Step 1
         2. Step 2
         3. Step 3
+        4. step 4
+        (continue until all steps are extracted)
         """
 
 
