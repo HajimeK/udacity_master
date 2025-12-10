@@ -301,7 +301,7 @@ class EvaluationAgent:
                     f"Make only these corrections, do not alter content validity: {instructions}"
                 )
         return {
-            "final_response": response.choices[0].message.content,
+            "final_response": response_from_worker,
             "evaluation": evaluation,
             "number_of_iterations": i+1
         }
@@ -318,6 +318,7 @@ class RoutingAgent():
             api_key = self.openai_api_key
         )
         self.agents = agents
+        self.last_ouput = ""
 
     def get_embedding(self, text):
         # Extract and return the embedding vector from the response
@@ -354,7 +355,8 @@ class RoutingAgent():
             return "Sorry, no suitable agent could be selected."
 
         print(f"[Router] Best agent: {best_agent['name']} (score={best_score:.3f})")
-        return best_agent["func"](user_input)
+        self.last_ouput = best_agent["func"](user_input + "\n\nPrevious output:\n" + self.last_ouput)
+        return self.last_ouput
 
 
 class ActionPlanningAgent:
@@ -370,7 +372,7 @@ class ActionPlanningAgent:
         self.default_model = "gpt-3.5-turbo"
         self.knowledge = knowledge
         self.persona = f"""
-        You are an action planning agent.
+        You are an action planning agent, and don't need to be like a human.
         Using your knowledge, you extract from the user prompt the steps requested
         to complete the action the user is asking for in the prompt.
         You return the steps as a list.
