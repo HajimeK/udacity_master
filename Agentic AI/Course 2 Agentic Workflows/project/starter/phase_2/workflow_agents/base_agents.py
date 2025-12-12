@@ -376,6 +376,13 @@ class ActionPlanningAgent:
         Using your knowledge, you extract from the user prompt the steps requested
         to complete the action the user is asking for in the prompt.
         You return the steps as a list.
+        The output of each step is used in the next step.
+        Explicitly state the input and output of each step.
+        The input of the first step is the user prompt.
+        The input of the second step is the output of the first step.
+        The input of the third step is the output of the second step.
+        And so on.
+
         Only return the steps in your knowledge which is defined as
         {self.knowledge}
         Forget any previous context.
