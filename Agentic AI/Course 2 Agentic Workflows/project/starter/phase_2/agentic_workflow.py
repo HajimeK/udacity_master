@@ -1,11 +1,5 @@
-# %% [markdown]
-# # Agentic Workflow
-
-# %% [markdown]
+# Agentic Workflow
 # imports and envs
-
-# %%
-# agentic_workflow.py
 # Import the following agents: ActionPlanningAgent, KnowledgeAugmentedPromptAgent, EvaluationAgent, RoutingAgent from the workflow_agents.base_agents module
 from workflow_agents.base_agents import ActionPlanningAgent, KnowledgeAugmentedPromptAgent, EvaluationAgent, RoutingAgent
 import os
@@ -15,9 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
-# %% [markdown]
-# ## Instantiate Agents
-#
+# Instantiate Agents
 # - Action Planning Agent
 # - Product Manager Knowledge Agent
 # - Product Manager Evaluation Agent
@@ -26,11 +18,7 @@ openai_api_key = os.getenv("OPENAI_API_KEY")
 # - Develeopment Engineer Knowledge Agent
 # - Develeopment Engineer Evaluation Agent
 
-# %% [markdown]
-# ### Action Planning Agent
-
-# %%
-# Action Planning Agent
+### Action Planning Agent
 knowledge_action_planning ="""
 Extract exactly 3 high-level workflow steps for Email Router project planning:
 1. Generate user stories - create comprehensive user stories for the Email Router product
@@ -38,22 +26,12 @@ Extract exactly 3 high-level workflow steps for Email Router project planning:
 3. Create development tasks - create engineering tasks with Task ID, Title, Description, Acceptance Criteria, Estimated Effort, and Dependencies\n"
 Focus specifically on Email Router functionality, not generic examples.
 """
-#"""
-#Stories are defined from a product spec by identifying a persona, an action, and a desired outcome for each story
-#Each story represents a specific functionality of the product described in the specification.
-#Features are defined by grouping related user stories.
-#Tasks are defined for each feature and represent the engineering work required to develop the product.
-#"""
 
 # Instantiate an action_planning_agent using the 'knowledge_action_planning'
 action_planning_agent = ActionPlanningAgent(
     openai_api_key = openai_api_key,
     knowledge = knowledge_action_planning)
 
-# %% [markdown]
-# ### Product Manager Knowledge Agent
-
-# %%
 # Product Manager - Knowledge Augmented Prompt Agent
 persona_product_manager = """
 You are a Product Manager.
@@ -71,13 +49,7 @@ Specification:
 [PASTE EMAIL ROUTER SPEC HERE]
 """
 
-path_to_document_file = os.path.join(os.path.abspath("."),
-                                        "Agentic AI",
-                                        "Course 2 Agentic Workflows",
-                                        "project",
-                                        "starter",
-                                        "phase_2",
-                                        "Product-Spec-Email-Router.txt")
+path_to_document_file = os.path.join(os.path.abspath("."), "Product-Spec-Email-Router.txt")
 product_spec = open(path_to_document_file, "rt").read()
 knowledge_product_manager = f"""
 Stories are defined by writing sentences with a persona, an action, and a desired outcome.
@@ -97,10 +69,6 @@ product_manager_knowledge_agent = KnowledgeAugmentedPromptAgent(
     knowledge = knowledge_product_manager
 )
 
-# %% [markdown]
-# ### Product Manager Evaluation Agent
-
-# %%
 # Product Manager - Evaluation Agent
 # Define the persona and evaluation criteria for a Product Manager evaluation agent
 # and instantiate it as product_manager_evaluation_agent.
@@ -118,16 +86,13 @@ product_manager_evaluation_agent = EvaluationAgent(
     max_interactions=3
 )
 
-# %% [markdown]
-# ### Program Manager Knowledge Agent
-
-# %%
 # Program Manager - Knowledge Augmented Prompt Agent
 persona_program_manager = """
 You are a Program Manager, you are responsible for defining feature from user stories.
 """
 
 knowledge_program_manager = """
+Your output consists only of list of features.
 Features are created from user stories step by step as below:
 step 1. Find a user story statement from the Previous output.
 step 2. Find a type of user after "As a" statement in the user story.
@@ -146,8 +111,6 @@ The user stories are given in the user prompt after a line which includes "Previ
 2: As a [type of user], I want [an action or feature] so that [benefit/value]
 3: As a [type of user], I want [an action or feature] so that [benefit/value]
 (continues)
-
-Only include features in the output. Do not include "Previous output:".
 """
 
 # Instantiate a program_manager_knowledge_agent using 'persona_program_manager' and 'knowledge_program_manager'
@@ -158,11 +121,6 @@ program_manager_knowledge_agent = KnowledgeAugmentedPromptAgent(
 )
 
 
-
-# %% [markdown]
-# ### Program Manager Evaluation Agent
-
-# %%
 # Program Manager - Evaluation Agent
 
 # Instantiate a program_manager_evaluation_agent using 'persona_program_manager_eval' and the evaluation criteria below.
@@ -191,10 +149,6 @@ program_manager_evaluation_agent = EvaluationAgent(
     max_interactions = 3
 )
 
-# %% [markdown]
-# ### Develeopment Engineer Knowledge Agent
-
-# %%
 # Development Engineer - Knowledge Augmented Prompt Agent
 persona_dev_engineer = """
 You are a Development Engineer, you are responsible for defining development tasks from features.
@@ -236,10 +190,6 @@ development_engineer_knowledge_agent = KnowledgeAugmentedPromptAgent(
     knowledge = knowledge_dev_engineer,
 )
 
-# %% [markdown]
-# ### Develeopment Engineer Evaluation Agent
-
-# %%
 # Development Engineer - Evaluation Agent
 persona_dev_engineer_eval = "You are an evaluation agent that checks the answers of other worker agents."
 evaluation_criteria_development_engineer_evaluation_agent = """
@@ -272,12 +222,7 @@ development_engineer_evaluation_agent = EvaluationAgent(
     max_interactions = 5
 )
 
-# %% [markdown]
-# ### Routing Agent
-
-# %%
 # Routing Agent
-# Instantiate a routing_agent. You will need to define a list of agent dictionaries (routes) for Product Manager, Program Manager, and Development Engineer. Each dictionary should contain 'name', 'description', and 'func' (linking to a support function). Assign this list to the routing_agent's 'agents' attribute.
 routing_agent = RoutingAgent(
     openai_api_key=openai_api_key,
 )
@@ -318,24 +263,16 @@ routing_agent.agents = [
     }
 ]
 
-# %% [markdown]
-# ## Start Test
-
-# %%
 # Run the workflow
 print("\n*** Workflow execution started ***\n")
 # Workflow Prompt
 # ****
-#workflow_prompt = "What would the development tasks for this product be?"
-#workflow_prompt = "What would the development tasks for the product based on user benefit and stories be"
 workflow_prompt = "Define a project tasks for this product be by creating user stories, key features, and development tasks step by step."
 # ****
 print(f"Task to complete in this workflow, workflow prompt = {workflow_prompt}")
 
 print("\nDefining workflow steps from the workflow prompt")
 
-# %%
-# Implement the workflow.
 #   1. Use the 'action_planning_agent' to extract steps from the 'workflow_prompt'.
 steps = action_planning_agent.extract_steps_from_prompt(workflow_prompt)
 
@@ -343,7 +280,6 @@ print("Action planned by the planning agent")
 for step in steps:
     print(step)
 
-# %%
 #   2. Initialize an empty list to store 'completed_steps'.
 #   3. Loop through the extracted workflow steps:
 #      a. For each step, use the 'routing_agent' to route the step to the appropriate support function.

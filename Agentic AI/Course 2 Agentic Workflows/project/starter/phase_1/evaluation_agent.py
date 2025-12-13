@@ -32,5 +32,9 @@ initial_prompt = "What is the capital of France?"
 print("---- Evaluation Start ----")
 result = evaluation_agent.evaluate(initial_prompt = initial_prompt)
 print("---- Evaluation Done ----")
+
+report = {}
 for key, value in result.items():
-    print(f"{key} : {value} \n")
+    report[key] = value
+
+print(report)

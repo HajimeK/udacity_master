@@ -1,4 +1,3 @@
-# TODO: 1 - import the OpenAI class from the openai library
 import numpy as np
 import pandas as pd
 import re
@@ -39,6 +38,11 @@ class BaseAgent:
             self.setAgentPersona(self.system_prompt)
 
     def respond(self):
+        print("\n")
+        print("Calling OpenAI API------------------------")
+        print("Model: ", self.model)
+        print("Messages: ", self.messages)
+        print("-------------------------------------------\n\n")
         response = self.client.chat.completions.create(
             model = self.model,
             messages = self.messages,
@@ -59,7 +63,7 @@ class DirectPromptAgent(BaseAgent):
 class AugmentedPromptAgent(BaseAgent):
     def __init__(self, openai_api_key, persona: str):
         super().__init__(openai_api_key=openai_api_key)
-        self.setAgentPersona(persona)
+        self.setAgentPersona(f"""{persona}\n\n Forget previous context; returns only text content.""")
 
     def respond(self, input_text):
         """Generate a response using OpenAI API."""

@@ -23,4 +23,6 @@ print(augmented_agent_response)
 print("Q: What knowledge the agent likely used to answer the prompt")
 print(f"A: Training data when building the LLM model {augmented_prompt_agent.model}")
 print("Q: How the system prompt specifying the persona affected the agent's response.")
-print("A: It adds role and context defined in the system prompt to LLM model response.")
+print(f"""
+A: It adds role and context defined in the system prompt to the LLM model response.
+So it should be \"{persona}\"\n\n""")

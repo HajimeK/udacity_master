@@ -45,4 +45,5 @@ agent = ActionPlanningAgent(
 # TPrint the agent's response to the following prompt: "One morning I wanted to have scrambled eggs"
 prompt = "One morning I wanted to have scrambled eggs"
 steps = agent.extract_steps_from_prompt(prompt)
-print(steps)
+for step in steps:
+    print(step)
