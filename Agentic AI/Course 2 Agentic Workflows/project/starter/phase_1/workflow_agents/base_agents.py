@@ -359,7 +359,9 @@ class RoutingAgent():
             return "Sorry, no suitable agent could be selected."
 
         print(f"[Router] Best agent: {best_agent['name']} (score={best_score:.3f})")
-        self.last_output = best_agent["func"](user_input + "\n\nPrevious output:\n" + self.last_output)
+
+        self.last_output = best_agent["func"](f"{user_input}\n\nPrevious output: {self.last_output}")
+
         return self.last_output
 
 

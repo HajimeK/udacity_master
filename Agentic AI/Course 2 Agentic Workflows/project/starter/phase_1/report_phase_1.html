@@ -7560,7 +7560,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">run</span> ./direct_prompt_agent.py
@@ -7607,7 +7607,7 @@ The agent respond directly using the LLM gpt-3.5-turbo
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">run</span> ./augmented_prompt_agent.py
@@ -7632,7 +7632,7 @@ Messages:  [{'role': 'system', 'content': "\nYou are a college professor, and an
 
 
 Dear students,
-The capital of France is Paris. It is known for its beautiful architecture, art, and culture. If you ever have the opportunity to visit, I highly recommend exploring the city and all it has to offer.
+The capital of France is Paris. It is known for its beautiful architecture, art, and culture. If you ever get the chance to visit, be sure to explore iconic landmarks like the Eiffel Tower and the Louvre Museum.
 Q: What knowledge the agent likely used to answer the prompt
 A: Training data when building the LLM model gpt-3.5-turbo
 Q: How the system prompt specifying the persona affected the agent's response.
@@ -7667,7 +7667,7 @@ For testing purposes, we are deliberately giving it the incorrect knowledge "The
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">run</span> ./knowledge_augmented_prompt_agent.py
@@ -7720,7 +7720,7 @@ SUCCESS
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">run</span> ./rag_knowledge_prompt_agent.py
@@ -7737,7 +7737,7 @@ SUCCESS
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>What is the podcast that Clara hosts about?
-Dear students, Clara hosts a podcast called "Crosscurrents" that explores the intersection of science, culture, and ethics. Each week, she interviews researchers, engineers, artists, and activists to delve into various topics within these realms.
+Dear students, Clara hosts a podcast called "Crosscurrents" that explores the intersection of science, culture, and ethics. Each week, she interviews researchers, engineers, artists, and activists to delve into various topics related to these fields.
 </pre>
 </div>
 </div>
@@ -7759,7 +7759,7 @@ Dear students, Clara hosts a podcast called "Crosscurrents" that explores the in
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">run</span> ./evaluation_agent.py
@@ -7821,7 +7821,7 @@ Make only these corrections, do not alter content validity: To fix the answer, t
 
 Calling OpenAI API------------------------
 Model:  gpt-3.5-turbo
-Messages:  [{'role': 'system', 'content': '\n        You are You are a college professor, your answer always starts with: Dear students,.\n\n        As a knowledge-based assistant, in your output, do not use your own knowledge, but use only the following knowledge : The capitol of France is London, not Paris\n        \n\n Forget previous context.'}, {'role': 'user', 'content': 'The original prompt was: What is the capital of France?\nThe response to that prompt was: Dear students,\n\nThe capital of France is London, not Paris.\n\nSincerely,\nYour college professor\nIt has been evaluated as incorrect.\nMake only these corrections, do not alter content validity: To fix the answer, the worker agent should provide only the name of a city without any additional information or sentences. The response should be concise and directly address the question without any unnecessary details.'}]
+Messages:  [{'role': 'system', 'content': '\n        You are You are a college professor, your answer always starts with: Dear students,.\n\n        As a knowledge-based assistant, in your output, do not use your own knowledge, but use only the following knowledge : The capitol of France is London, not Paris\n        \n\n Forget previous context.'}, {'role': 'user', 'content': 'What is the capital of France?'}, {'role': 'user', 'content': 'The original prompt was: What is the capital of France?\nThe response to that prompt was: Dear students,\n\nThe capital of France is London, not Paris.\n\nSincerely,\nYour college professor\nIt has been evaluated as incorrect.\nMake only these corrections, do not alter content validity: To fix the answer, the worker agent should provide only the name of a city without any additional information or sentences. The response should be concise and directly address the question without any unnecessary details.'}]
 -------------------------------------------
 
 
@@ -7829,11 +7829,11 @@ Worker Agent Response:
 London
  Step 2: Evaluator agent judges the response
 Evaluator Agent Evaluation:
-Yes, the answer "London" meets the criteria because it is solely the name of a city and not a sentence.
+Yes, the answer "London" meets the criteria as it is solely the name of a city and not a sentence.
  Step 3: Check if evaluation is positive
 ✅ Final solution accepted.
 ---- Evaluation Done ----
-{'final_response': 'London', 'evaluation': 'Yes, the answer "London" meets the criteria because it is solely the name of a city and not a sentence.', 'number_of_iterations': 2}
+{'final_response': 'London', 'evaluation': 'Yes, the answer "London" meets the criteria as it is solely the name of a city and not a sentence.', 'number_of_iterations': 2}
 </pre>
 </div>
 </div>
@@ -7855,7 +7855,7 @@ Yes, the answer "London" meets the criteria because it is solely the name of a c
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">run</span> ./routing_agent.py
@@ -7879,7 +7879,7 @@ Yes, the answer "London" meets the criteria because it is solely the name of a c
 
 Calling OpenAI API------------------------
 Model:  gpt-3.5-turbo
-Messages:  [{'role': 'system', 'content': '\n        You are You are a college professor.\n\n        As a knowledge-based assistant, in your output, do not use your own knowledge, but use only the following knowledge : You know everything about Texas\n        \n\n Forget previous context.'}, {'role': 'user', 'content': 'Tell me about the history of Rome, Texas\n\nPrevious output:\n'}]
+Messages:  [{'role': 'system', 'content': '\n        You are You are a college professor.\n\n        As a knowledge-based assistant, in your output, do not use your own knowledge, but use only the following knowledge : You know everything about Texas\n        \n\n Forget previous context.'}, {'role': 'user', 'content': 'Tell me about the history of Rome, Texas\n\nPrevious output: '}]
 -------------------------------------------
 
 
@@ -7891,35 +7891,33 @@ Messages:  [{'role': 'system', 'content': '\n        You are You are a college p
 
 Calling OpenAI API------------------------
 Model:  gpt-3.5-turbo
-Messages:  [{'role': 'system', 'content': '\n        You are You are a college professor.\n\n        As a knowledge-based assistant, in your output, do not use your own knowledge, but use only the following knowledge : You know everything about Europe\n        \n\n Forget previous context.'}, {'role': 'user', 'content': 'Tell me about the history of Rome, Italy\n\nPrevious output:\nRome, Texas is a small unincorporated community located in Fannin County. It was established in the mid-19th century and was named after the ancient city of Rome in Italy. The community grew as a trading post and agricultural center, serving local farmers and ranchers. Today, Rome is known for its rural charm and historic buildings, reflecting its rich history as a frontier settlement in Texas.'}]
+Messages:  [{'role': 'system', 'content': '\n        You are You are a college professor.\n\n        As a knowledge-based assistant, in your output, do not use your own knowledge, but use only the following knowledge : You know everything about Europe\n        \n\n Forget previous context.'}, {'role': 'user', 'content': 'Tell me about the history of Rome, Italy\n\nPrevious output: Rome, Texas is a small unincorporated community located in Fannin County. It was established in the mid-19th century and was named after the ancient city of Rome in Italy. The community grew as a result of its location along the Texas and Pacific Railway. Today, Rome is a quiet rural area with a small population and is known for its historic charm and scenic countryside.'}]
 -------------------------------------------
 
 
-0.05941409246899618
-0.08292212189656913
-0.13014621506842747
+0.059403868713285554
+0.08288721391919845
+0.13013003113096125
 [Router] Best agent: math agent (score=0.130)
 
 
 Calling OpenAI API------------------------
 Model:  gpt-3.5-turbo
-Messages:  [{'role': 'system', 'content': '\n        You are You are a college math professor.\n\n        As a knowledge-based assistant, in your output, do not use your own knowledge, but use only the following knowledge : You know everything about math, you take prompts with numbers, extract math formulas, and show the answer without explanation\n        \n\n Forget previous context.'}, {'role': 'user', 'content': "One story takes 2 days, and there are 20 stories\n\nPrevious output:\nRome, Italy, is a city with a rich and extensive history that dates back over 2,800 years. It was founded in the 8th century BC and grew to become the capital of the Roman Kingdom, Roman Republic, and later the Roman Empire. Rome played a crucial role in the development of Western civilization, serving as the center of politics, culture, and military power for centuries.\n\nThe city of Rome is known for its iconic landmarks, such as the Colosseum, the Roman Forum, and the Pantheon, which stand as a testament to its ancient past. Rome was also the center of the Roman Catholic Church, with the Vatican City located within its boundaries.\n\nThroughout its history, Rome has faced numerous invasions, sackings, and changes in power. The fall of the Western Roman Empire in 476 AD marked the beginning of the Middle Ages in Europe, but Rome continued to be a significant city, albeit with reduced influence.\n\nIn the Renaissance period, Rome experienced a revival of arts and culture under the patronage of the papacy, leading to the creation of masterpieces by artists such as Michelangelo, Raphael, and Bernini. The city's architectural and artistic heritage from this period continues to attract millions of visitors each year.\n\nToday, Rome is the capital city of Italy and remains a vibrant center of culture, history, and tourism. It is a UNESCO World Heritage Site and continues to be a symbol of the enduring legacy of the Roman Empire."}]
+Messages:  [{'role': 'system', 'content': '\n        You are You are a college math professor.\n\n        As a knowledge-based assistant, in your output, do not use your own knowledge, but use only the following knowledge : You know everything about math, you take prompts with numbers, extract math formulas, and show the answer without explanation\n        \n\n Forget previous context.'}, {'role': 'user', 'content': "One story takes 2 days, and there are 20 stories\n\nPrevious output: Rome, Italy, has a rich and extensive history that dates back over 2,800 years. It was founded in the 8th century BC and grew to become the capital of the Roman Kingdom, Roman Republic, and later the Roman Empire. Rome was a major center of power, culture, and civilization in ancient times, known for its advancements in art, architecture, engineering, and governance.\n\nThe city of Rome played a crucial role in shaping Western civilization, with its influence spreading throughout Europe and beyond. It was the heart of the Roman Empire, which at its peak controlled vast territories across Europe, Africa, and the Middle East.\n\nThroughout its history, Rome experienced periods of growth, decline, and transformation. It faced invasions, civil wars, and political upheavals but also witnessed periods of prosperity and cultural flourishing. The city was a hub of trade, religion, and intellectual exchange, attracting people from different regions and backgrounds.\n\nRome's historical landmarks, such as the Colosseum, Roman Forum, Pantheon, and Vatican City, stand as testaments to its enduring legacy. Today, Rome remains a vibrant city that blends its ancient heritage with modern influences, attracting millions of visitors each year to explore its history, art, and culture."}]
 -------------------------------------------
 
 
-Tell me about the history of Rome, Texas : Rome, Texas is a small unincorporated community located in Fannin County. It was established in the mid-19th century and was named after the ancient city of Rome in Italy. The community grew as a trading post and agricultural center, serving local farmers and ranchers. Today, Rome is known for its rural charm and historic buildings, reflecting its rich history as a frontier settlement in Texas.
+Tell me about the history of Rome, Texas : Rome, Texas is a small unincorporated community located in Fannin County. It was established in the mid-19th century and was named after the ancient city of Rome in Italy. The community grew as a result of its location along the Texas and Pacific Railway. Today, Rome is a quiet rural area with a small population and is known for its historic charm and scenic countryside.
 
 
 ----------------------------------------
-Tell me about the history of Rome, Italy : Rome, Italy, is a city with a rich and extensive history that dates back over 2,800 years. It was founded in the 8th century BC and grew to become the capital of the Roman Kingdom, Roman Republic, and later the Roman Empire. Rome played a crucial role in the development of Western civilization, serving as the center of politics, culture, and military power for centuries.
+Tell me about the history of Rome, Italy : Rome, Italy, has a rich and extensive history that dates back over 2,800 years. It was founded in the 8th century BC and grew to become the capital of the Roman Kingdom, Roman Republic, and later the Roman Empire. Rome was a major center of power, culture, and civilization in ancient times, known for its advancements in art, architecture, engineering, and governance.
 
-The city of Rome is known for its iconic landmarks, such as the Colosseum, the Roman Forum, and the Pantheon, which stand as a testament to its ancient past. Rome was also the center of the Roman Catholic Church, with the Vatican City located within its boundaries.
+The city of Rome played a crucial role in shaping Western civilization, with its influence spreading throughout Europe and beyond. It was the heart of the Roman Empire, which at its peak controlled vast territories across Europe, Africa, and the Middle East.
 
-Throughout its history, Rome has faced numerous invasions, sackings, and changes in power. The fall of the Western Roman Empire in 476 AD marked the beginning of the Middle Ages in Europe, but Rome continued to be a significant city, albeit with reduced influence.
+Throughout its history, Rome experienced periods of growth, decline, and transformation. It faced invasions, civil wars, and political upheavals but also witnessed periods of prosperity and cultural flourishing. The city was a hub of trade, religion, and intellectual exchange, attracting people from different regions and backgrounds.
 
-In the Renaissance period, Rome experienced a revival of arts and culture under the patronage of the papacy, leading to the creation of masterpieces by artists such as Michelangelo, Raphael, and Bernini. The city's architectural and artistic heritage from this period continues to attract millions of visitors each year.
-
-Today, Rome is the capital city of Italy and remains a vibrant center of culture, history, and tourism. It is a UNESCO World Heritage Site and continues to be a symbol of the enduring legacy of the Roman Empire.
+Rome's historical landmarks, such as the Colosseum, Roman Forum, Pantheon, and Vatican City, stand as testaments to its enduring legacy. Today, Rome remains a vibrant city that blends its ancient heritage with modern influences, attracting millions of visitors each year to explore its history, art, and culture.
 
 
 ----------------------------------------
@@ -7948,7 +7946,7 @@ One story takes 2 days, and there are 20 stories : The 20 stories will take 40 d
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span> <span class="o">%</span><span class="k">run</span> ./action_planning_agent.py
