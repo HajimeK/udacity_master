@@ -30,7 +30,8 @@ class BaseAgent:
         self.messages.append({"role": "system", "content": self.system_prompt})
 
     def setUserQuery(self, prompt: str):
-        self.messages.append({"role": "user", "content": self.system_prompt})
+        self.user_prompt = prompt
+        self.messages.append({"role": "user", "content": self.user_prompt})
 
     def clearMessage(self):
         self.messages = []
@@ -48,7 +49,7 @@ class BaseAgent:
             messages = self.messages,
             temperature=0
         )
-        self.clearMessage()
+        #self.clearMessage()
         return response
 
 # DirectPromptAgent class definition
@@ -63,7 +64,7 @@ class DirectPromptAgent(BaseAgent):
 class AugmentedPromptAgent(BaseAgent):
     def __init__(self, openai_api_key, persona: str):
         super().__init__(openai_api_key=openai_api_key)
-        self.setAgentPersona(f"""{persona}\n\n Forget previous context; returns only text content.""")
+        self.setAgentPersona(f"""{persona}\n\n Forget previous context.""")
 
     def respond(self, input_text):
         """Generate a response using OpenAI API."""
@@ -74,7 +75,13 @@ class AugmentedPromptAgent(BaseAgent):
 # KnowledgeAugmentedPromptAgent class definition
 class KnowledgeAugmentedPromptAgent(AugmentedPromptAgent):
     def __init__(self, openai_api_key, persona, knowledge):
-        super().__init__(openai_api_key=openai_api_key, persona=persona)
+        initial_persona = f"""
+        You are {persona}.
+
+        As a knowledge-based assistant, in your output, do not use your own knowledge, but use only the following knowledge : {knowledge}
+        """
+        self.knowledge = knowledge
+        super().__init__(openai_api_key=openai_api_key, persona=initial_persona)
         """Initialize the agent with provided attributes."""
         #           - The persona with the following instruction:
         #             "You are _persona_ knowledge-based assistant. Forget all previous context."
@@ -82,13 +89,6 @@ class KnowledgeAugmentedPromptAgent(AugmentedPromptAgent):
         #             "Use only the following knowledge to answer, do not use your own knowledge: _knowledge_"
         #           - Final instruction:
         #             "Answer the prompt based on this knowledge, not your own."
-        self.knowledge = knowledge
-        persona = f"""
-        You are {persona} knowledge-based assistant. Forget all previous context.
-        Use only the following knowledge to answer, do not use your own knowledge: {knowledge}
-        Answer the prompt based on this knowledge, not your own.
-        """
-        self.setAgentPersona(persona)
 
 # RAGKnowledgePromptAgent class definition
 class RAGKnowledgePromptAgent:
@@ -242,8 +242,8 @@ class EvaluationAgent:
             base_url = self.openai_base_url,
             api_key=self.openai_api_key
         )
-        self.persone = persona
-        self.evaluate_criteria = evaluation_criteria
+        self.persona = persona
+        self.evaluation_criteria = evaluation_criteria
         self.worker_agent = worker_agent
         self.max_interactions = max_interactions
         self.model = model
@@ -263,13 +263,13 @@ class EvaluationAgent:
             print(" Step 2: Evaluator agent judges the response")
             eval_prompt = (
                 f"Does the following answer: {response_from_worker}\n"
-                f"Meet this criteria: {self.evaluate_criteria}\n"
+                f"Meet this criteria: {self.evaluation_criteria}\n"
                 f"Respond Yes or No, and the reason why it does or doesn't meet the criteria."
             )
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[
-                    {"role": "system", "content": self.persone},
+                    {"role": "system", "content": self.persona},
                     {"role": "user", "content": eval_prompt}
                 ],
                 temperature=0
@@ -289,7 +289,7 @@ class EvaluationAgent:
                 response = self.client.chat.completions.create(
                     model=self.model,
                     messages=[
-                        {"role": "system", "content": self.persone},
+                        {"role": "system", "content": self.persona},
                         {"role": "user", "content": instruction_prompt}
                     ],
                     temperature=0
@@ -322,7 +322,7 @@ class RoutingAgent():
             api_key = self.openai_api_key
         )
         self.agents = agents
-        self.last_ouput = ""
+        self.last_output = ""
 
     def get_embedding(self, text):
         # Extract and return the embedding vector from the response
@@ -359,8 +359,8 @@ class RoutingAgent():
             return "Sorry, no suitable agent could be selected."
 
         print(f"[Router] Best agent: {best_agent['name']} (score={best_score:.3f})")
-        self.last_ouput = best_agent["func"](user_input + "\n\nPrevious output:\n" + self.last_ouput)
-        return self.last_ouput
+        self.last_output = best_agent["func"](user_input + "\n\nPrevious output:\n" + self.last_output)
+        return self.last_output
 
 
 class ActionPlanningAgent:

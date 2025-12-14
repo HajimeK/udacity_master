@@ -254,12 +254,12 @@ routing_agent.agents = [
     {
         "name": "Program Manager",
         "description": "Only Responsible for defining one specific product feature from a user stories",
-        "func": lambda query: support_function(f"User stories are defined in {query}", program_manager_evaluation_agent)
+        "func": lambda query: support_function(query, program_manager_evaluation_agent)
     },
     {
         "name": "Development Engineer",
         "description": "Responsible for define development tasks from features",
-        "func": lambda query: support_function(f"Features are defined in {query}", development_engineer_evaluation_agent)
+        "func": lambda query: support_function(query, development_engineer_evaluation_agent)
     }
 ]
 

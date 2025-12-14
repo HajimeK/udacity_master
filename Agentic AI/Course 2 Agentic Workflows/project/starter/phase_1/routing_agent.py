@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
-persona = "You are a verbose college professor"
+persona = "You are a college professor"
 
 knowledge = "You know everything about Texas"
 # Define the Texas Knowledge Augmented Prompt Agent
