@@ -236,30 +236,38 @@ routing_agent = RoutingAgent(
 #   4. Return the final validated response.
 # Updated for reusability of the code
 def support_function(query: str,
+                    knowledge_agent: KnowledgeAugmentedPromptAgent,
                     eval_agent: EvaluationAgent):
     # Following commented out as the evaluation agent implementation execute this
     # Rather if we call here, initial query is againg executed by a worker agent
     # in the evaluation agent.
     # See the worker agent is set in each evaluation agent, when they are intantiated.
     #initial_response = knowledge_agent.respond(query)
-    evaluation_response = eval_agent.evaluate(query)
-    return evaluation_response["final_response"]
+    #evaluation_response = eval_agent.evaluate(query)
+    #return evaluation_response["final_response"]
+
+    # Step 1: Get response from Knowledge Augmented Prompt Agent
+    knowledge_response = knowledge_agent.respond(query)
+    # Step 2: Have the response evaluated by Evaluation Agent
+    evaluation_result = eval_agent.evaluate(knowledge_response)
+    # Step 3: Return the final validated response
+    return evaluation_result["final_response"]
 
 routing_agent.agents = [
     {
         "name": "Product Manager",
         "description": "Only responsible for defining one user story of a product spec.",
-        "func": lambda query: support_function(query, product_manager_evaluation_agent)
+        "func": lambda query: support_function(query, product_manager_knowledge_agent, product_manager_evaluation_agent)
     },
     {
         "name": "Program Manager",
         "description": "Only Responsible for defining one specific product feature from a user stories",
-        "func": lambda query: support_function(f"User stories are defined in {query}", program_manager_evaluation_agent)
+        "func": lambda query: support_function(f"User stories are defined in {query}", program_manager_knowledge_agent, program_manager_evaluation_agent)
     },
     {
         "name": "Development Engineer",
         "description": "Responsible for define development tasks from features",
-        "func": lambda query: support_function(f"Features are defined in {query}", development_engineer_evaluation_agent)
+        "func": lambda query: support_function(f"Features are defined in {query}", development_engineer_knowledge_agent, development_engineer_evaluation_agent)
     }
 ]
 
