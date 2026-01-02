@@ -6,8 +6,8 @@ import uuid
 from datetime import datetime
 from openai import OpenAI
 
-#OPENAI_BASE_URL = "https://openai.vocareum.com/v1"
-OPENAI_BASE_URL = "https://api.openai.com/v1"
+OPENAI_BASE_URL = "https://openai.vocareum.com/v1"
+#OPENAI_BASE_URL = "https://api.openai.com/v1"
 
 class BaseAgent:
     def __init__(self, openai_api_key, model="gpt-3.5-turbo"):
