@@ -211,3 +211,4 @@ api_keys/*.Key
 Agentic AI/Course 2 Agentic Workflows/project/starter/phase_1/openai.key
 chunks-*.csv
 embeddings-*.csv
+Agentic AI/Course 3 Building Agents/Project/chromadb/**
